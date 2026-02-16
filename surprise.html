@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Surprise ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* Romantic Background */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url("romantic-bg.jpg") no-repeat center center;
+            background-size: cover;
+            z-index: -3;
+        }
+
+        /* Dark Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            z-index: -2;
+        }
+
+        h2 {
+            color: white;
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+        button {
+            padding: 14px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background: #ff4d6d;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Video same size feel as image */
+        .video-wrapper {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 20px;
+            display: none;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: 0;
+            opacity: 0.9;
+            animation: fall 3s linear forwards;
+            z-index: 5;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Glitter */
+        .glitter {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 2s infinite alternate;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            from { transform: scale(1); opacity: 0.3; }
+            to { transform: scale(1.8); opacity: 1; }
+        }
+
+        .ending {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #ff4d6d;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h2>Rahul… This Is For You ❤️</h2>
+
+<button onclick="startSurprise()">Play Your Surprise 🎬</button>
+
+<div class="video-wrapper">
+    <video id="videoPlayer" controls>
+        <source src="surprise.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="ending" id="endingText">
+    Happy Birthday My Love ❤️<br>
+    Forever Yours – Sreesha 💖
+</div>
+
+<script>
+
+/* Fade in */
+window.onload = function() {
+    document.body.classList.add("loaded");
+};
+
+/* Start Video */
+function startSurprise() {
+    const video = document.getElementById("videoPlayer");
+    video.style.display = "block";
+    video.play();
+    launchConfetti();
+}
+
+/* Confetti */
+function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+            ["red","blue","yellow","green","pink","purple","orange"]
+            [Math.floor(Math.random()*7)];
+        confetti.style.animationDuration = (Math.random()*3+2) + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+    }
+}
+
+/* Glitter */
+for (let i = 0; i < 40; i++) {
+    let glitter = document.createElement("div");
+    glitter.classList.add("glitter");
+    glitter.style.top = Math.random() * 100 + "vh";
+    glitter.style.left = Math.random() * 100 + "vw";
+    glitter.style.animationDelay = Math.random() * 2 + "s";
+    document.body.appendChild(glitter);
+}
+
+/* Ending Text */
+document.getElementById("videoPlayer").addEventListener("ended", function() {
+    document.getElementById("endingText").style.display = "block";
+});
+
+</script>
+
+</body>
+</html>
